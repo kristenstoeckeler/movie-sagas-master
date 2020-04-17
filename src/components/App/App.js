@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Route} from 'react-router-dom';
 import { withRouter } from 'react-router';
 import './App.css';
-import MovieGrid from '../MovieGrid/MovieGrid';
 import Home from '../Home/Home';
 
 
