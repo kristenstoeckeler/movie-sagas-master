@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
+import { HashRouter as Router, Route} from 'react-router-dom';
+import { withRouter } from 'react-router';
 import './App.css';
+import MovieGrid from '../MovieGrid/MovieGrid';
+import Home from '../Home/Home';
+
+
+import { connect } from 'react-redux';
+import AppBar from '@material-ui/core/AppBar';
 
 class App extends Component {
-  // Renders the entire app on the DOM
   render() {
     return (
-      <div className="App">
-        <p>Making a Change!</p>
-      </div>
+      <>
+      <Router>
+          <Route exact path='/' component={Home} />
+
+      </Router>
+
+      </>
     );
   }
 }
 
+
 export default App;
+
