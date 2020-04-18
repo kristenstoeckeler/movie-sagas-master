@@ -21,11 +21,8 @@ class Home extends Component {
 
                 <div className="App">
                     <h1>Welcome to Movie ChrOme</h1>
-                    <h2>Movie Database</h2>     
-                    <MovieCard>
-                    </MovieCard>
-                    <MovieGrid></MovieGrid>
-               
+                    <h2>Movie Database</h2> 
+                        <MovieGrid /> 
                 </div>
             </>
         );
