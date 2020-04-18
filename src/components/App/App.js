@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import './App.css';
 import Home from '../Home/Home';
 import Details from '../Details/Details';
+import Edit from '../Edit/Edit';
 
 
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ class App extends Component {
       <Router>
           <Route exact path='/' component={Home} />
           <Route exact path='/details' component={Details} />
+          <Route exact path='/edit' component={Edit} />
       </Router>
       </>
     );
