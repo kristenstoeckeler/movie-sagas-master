@@ -5,8 +5,6 @@ import './App.css';
 import Home from '../Home/Home';
 import Details from '../Details/Details';
 import Edit from '../Edit/Edit';
-
-
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 
@@ -16,7 +14,7 @@ class App extends Component {
       <>
       <Router>
           <Route exact path='/' component={Home} />
-          <Route exact path='/details' component={Details} />
+          <Route exact path = '/details' component={Details} />
           <Route exact path='/edit' component={Edit} />
       </Router>
       </>
@@ -24,6 +22,10 @@ class App extends Component {
   }
 }
 
+const putPropsOnReduxStore = (reduxStore) => ({
+  details: reduxStore.detailsReducer,
+});
 
-export default App;
+
+export default connect(putPropsOnReduxStore)(App);
 

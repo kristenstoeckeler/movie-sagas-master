@@ -60,11 +60,10 @@ class MovieCard extends React.Component {
 
 
     //HandleChange and HandleSubmit Not WORKING TOGETHER AT THE MOMENT
-    handleSubmit = (title, description) => {
-        console.log('in handleSubmit', title, description);
-
-        this.props.dispatch({ type: 'DETAILS', payload: {title, description} });
-        this.props.history.push('/details');
+    handleSubmit = (movieId) => {
+        console.log('in handleSubmit', movieId);
+        this.props.dispatch({ type: 'DETAILS', payload: {movieId} });
+        this.props.history.push(`/details`);
     }
 
     render() {
@@ -97,7 +96,7 @@ class MovieCard extends React.Component {
                                 title={movie.title}
                             />
                             <CardContent>
-                        <Button type="submit" variant="contained" color="secondary" onClick={() => this.handleSubmit(movie.title, movie.description)}>Details</Button>
+                        <Button type="submit" variant="contained" color="secondary" onClick={() => this.handleSubmit(movie.id)}>Details</Button>
                             </CardContent>
                             <CardActions className={classes.actions} disableActionSpacing>
                                 <IconButton aria-label="Add to favorites">

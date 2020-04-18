@@ -25,7 +25,9 @@ class Details extends Component{
     render(){
         return(
             <>
-            <h3>{this.props.details.title}</h3>
+            {/* {JSON.stringify(this.props.details)} */}
+            <h3>{this.props.details.title}</h3> 
+            <img src={this.props.details.poster} />
             <p>{this.props.details.description}</p>
             <Button variant="contained" color="secondary"  onClick={this.goBrowse}>Browse Movies</Button>
             <Button variant="contained" color="secondary" onClick={this.goEdit}>Edit Movie</Button>

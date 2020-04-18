@@ -14,18 +14,28 @@ import App from './components/App/App';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
-    // yield takeEvery('DETAILS', getDetailSaga);
+    yield takeEvery('DETAILS', getDetailSaga);
 }
 
-// function* getDetailSaga(action){
-//     console.log( 'in getDetail saga', action.payload);
-//     try{
-//         yield put ({ type: 'DETAIL_PAGE', payload: response.data})
-//     }
-//     catch(error){
-//         console.log('Error with Details GET', error);   
-//     }
-// }
+function* getDetailSaga(action){
+    console.log( 'in getDetail saga', action.payload);
+    try{
+        const response = yield axios.post(`/api/details/${action.payload}`, action.payload);
+        yield put ({ type: 'DETAIL_PAGE', payload: response.data})
+    }
+    catch(error){
+        console.log('Error with Details GET', error);   
+    }
+}
+
+const detailsReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'DETAIL_PAGE':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 function* getMoviesSaga(action){
     console.log( 'in getMovies', action);
@@ -46,15 +56,6 @@ const sagaMiddleware = createSagaMiddleware();
 const moviesReducer = (state = [], action) => {
     switch (action.type) {
         case 'MOVIES':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
-const detailsReducer = (state = [], action) => {
-    switch (action.type) {
-        case 'DETAILS':
             return action.payload;
         default:
             return state;
