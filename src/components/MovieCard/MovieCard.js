@@ -52,32 +52,19 @@ const styles = theme => ({
 class MovieCard extends React.Component {
     state = { 
         expanded: false,
-        description: '',
     };
 
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
 
-    handleSubmit = (movieDesc) => {
-        console.log('in handClick', movieDesc);
-        this.props.dispatch({ type: 'DETAILS', payload: movieDesc});
-        this.props.history.push('/details');
-    }
-
 
     //HandleChange and HandleSubmit Not WORKING TOGETHER AT THE MOMENT
-    handleChange = (movieDesc) => {
-        console.log('in handChange', movieDesc);
-        this.setState({
-            expanded: false,
-            description: movieDesc,
-        })
-        return(
-            <>
-            <Details description={this.state.description} />
-            </>
-        )
+    handleSubmit = (title, description) => {
+        console.log('in handleSubmit', title, description);
+
+        this.props.dispatch({ type: 'DETAILS', payload: {title, description} });
+        this.props.history.push('/details');
     }
 
     render() {
@@ -86,7 +73,6 @@ class MovieCard extends React.Component {
 
         return (
             <>
-            <form onSubmit={this.handleSubmit}>
             {/* {JSON.stringify(this.props.movies)}
             {this.props.movies.map((movie) => {
                 return ( */}
@@ -109,12 +95,9 @@ class MovieCard extends React.Component {
                                 className={classes.media}
                                 image={movie.poster}
                                 title={movie.title}
-                                onClick={()=>this.handleChange(movie.description)}
                             />
                             <CardContent>
-                                <Typography component="p">
-                                    {movie.description}
-                            </Typography>
+                        <Button type="submit" variant="contained" color="secondary" onClick={() => this.handleSubmit(movie.title, movie.description)}>Details</Button>
                             </CardContent>
                             <CardActions className={classes.actions} disableActionSpacing>
                                 <IconButton aria-label="Add to favorites">
@@ -143,8 +126,7 @@ class MovieCard extends React.Component {
                                     
                                 </CardContent>
                             </Collapse>
-                        </Card>
-                </form>           
+                        </Card>     
             </>
         );
     }
