@@ -12,27 +12,16 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 
-class Details extends Component{
+class EditView extends Component {
 
-    goBrowse = () => {
-        this.props.history.push('/');
-    }
-
-    goEdit = () => {
-        this.props.history.push('/edit');
-    }
-
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <h3>{this.props.details.title}</h3>
-            <p>{this.props.details.description}</p>
-            <Button variant="contained" color="secondary"  onClick={this.goBrowse}>Browse Movies</Button>
-            <Button variant="contained" color="secondary" onClick={this.goEdit}>Edit Movie</Button>
+                <h3>Edit Movie</h3>
             </>
         );
     }
-} 
+}
 
 
 const putPropsOnReduxStore = (reduxStore) => ({
@@ -40,4 +29,4 @@ const putPropsOnReduxStore = (reduxStore) => ({
 });
 
 
-export default withStyles()(connect(putPropsOnReduxStore)(Details));
+export default withStyles()(connect(putPropsOnReduxStore)(EditView));
