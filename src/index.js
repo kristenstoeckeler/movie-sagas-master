@@ -14,6 +14,19 @@ import App from './components/App/App';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
+    yield takeEvery('DETAILS', getDetailSaga);
+}
+
+function* getDetailSaga(action){
+    console.log( 'in getDetail saga', action.payload);
+    try{
+        const response = yield axios.get(`/api/details/${action.payload}`);
+        console.log( 'Here is the GET response for /api/details/');
+        yield put ({ type: 'DETAIL_PAGE', payload: response.data})
+    }
+    catch(error){
+        console.log('Error with Details GET', error);   
+    }
 }
 
 function* getMoviesSaga(action){

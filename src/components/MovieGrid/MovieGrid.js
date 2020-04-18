@@ -34,6 +34,8 @@ class GuttersGrid extends React.Component {
         });
     };
 
+
+
     render() {
         const { classes } = this.props;
         const { spacing } = this.state;
@@ -44,7 +46,7 @@ class GuttersGrid extends React.Component {
                 <Grid item xs={12}>
                     <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
                         {this.props.movies.map(movie => (
-                            <MovieCard movie={movie}/>
+                            <MovieCard movie={movie} />
                         ))}
                         
                         {/* {[0, 1, 2].map(value => (
