@@ -14,6 +14,10 @@ import Button from '@material-ui/core/Button';
 
 class Details extends Component{
 
+    // componentDidMount(){
+    //     this.props.dispatch({type:'DETAILS'});
+    // }
+
     goBrowse = () => {
         this.props.history.push('/');
     }

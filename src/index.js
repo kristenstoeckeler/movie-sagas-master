@@ -15,6 +15,19 @@ import App from './components/App/App';
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
     yield takeEvery('DETAILS', getDetailSaga);
+    yield takeEvery('EDIT', editMovieSaga);
+}
+
+function* editMovieSaga(action){
+    console.log('in editMovieSaga', action.payload);
+    try{
+        yield axios.put('/api/edit', action.payload);
+        yield put({ type: 'DETAILS'}) 
+    }
+    catch (error) {
+        console.log('Error on POST', error);
+    }
+    
 }
 
 function* getDetailSaga(action){
