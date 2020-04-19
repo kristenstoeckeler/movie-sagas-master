@@ -8,9 +8,10 @@ router.post('/:id', (req, res) => {
 
     console.log('Heres whats in id:', req.body);
     const id = req.body;
-    const queryText = `SELECT id, title, poster, description FROM movies WHERE id = $1`;
+    const queryText = `SELECT * FROM movies WHERE movies.id = $1;`;
     pool.query(queryText, [id.movieId])
         .then((result) => {
+            console.log( 'this is what the router is sending to index.js', result.rows[0] );
             res.send(result.rows[0]);
         })
         .catch((error) => {
