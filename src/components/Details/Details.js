@@ -29,13 +29,15 @@ class Details extends Component{
     render(){
         return(
             <>
-            {/* {JSON.stringify(this.props.details)} */}
+            {JSON.stringify(this.props.details)}
             <h3>{this.props.details.title}</h3> 
             <img src={this.props.details.poster} />
             <p>{this.props.details.description}</p>
+            <h4>Genre</h4>
+            <h5>{this.props.details.name}</h5>
             <Button variant="contained" color="secondary"  onClick={this.goBrowse}>Browse Movies</Button>
-            <Button variant="contained" color="secondary" onClick={this.goEdit}>Edit Movie</Button>
-            </>
+            <Button variant="contained" color="secondary" onClick={this.goEdit}>Edit Movie</Button> 
+            </> 
         );
     }
 } 
