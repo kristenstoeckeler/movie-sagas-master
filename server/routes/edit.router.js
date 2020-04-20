@@ -7,9 +7,8 @@ const router = express.Router();
 router.put('/', (req, res) => {
 
     console.log('Heres whats in req.body', req.body);
-    const id = req.body;
-    const queryText = `SELECT id, title, poster, description FROM movies WHERE id = $1`;
-    pool.query(queryText, [id.movieId])
+    const queryText = `UPDATE movies SET description = $1, title = $2 WHERE id=$3`;
+    pool.query(queryText, [req.body.description, req.body.title, req.body.id])
         .then((result) => {
             res.send(result.rows[0]);
         })

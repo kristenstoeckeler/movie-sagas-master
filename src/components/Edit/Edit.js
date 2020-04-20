@@ -74,16 +74,22 @@ const currencies = [
 
 class EditView extends Component {
     state = {
+        id: this.props.details.id,
         genre: '',
-        multiline: 'Controlled',
-        labelWidth: 0,
         description: this.props.details.description,
+        title: this.props.details.title,
     };
+
+    handleChangeTitle = (event, propertyName) => {
+        console.log('here is the title input', event.target.value);
+        this.setState({
+            [propertyName]: event.target.value
+        });
+    }
 
 
     handleChangeDesc = (event, propertyName) => {
         console.log( 'here is the description input', event.target.value );
-        
         this.setState({ 
             [propertyName]: event.target.value 
         });
@@ -91,7 +97,6 @@ class EditView extends Component {
 
     handleChangeGenre = genre => event => {
         console.log('here is the genre input', event.target.value);
-
         this.setState({
             genre: event.target.value
         });
@@ -102,11 +107,12 @@ class EditView extends Component {
     }
 
     handleSubmit = () => {
-        console.log('in handleSubmit', this.props.details.id, this.state.genre)
+        console.log('in handleSubmit', this.state);
         this.props.dispatch({
             type: 'EDIT', 
-            payload: [this.props.details.id, this.state.genre, this.state.description]
+            payload: this.state
         })
+        this.props.history.push('/details');
     }
 
     render() {
@@ -117,12 +123,20 @@ class EditView extends Component {
         return (
             <>
             <form onSubmit={this.handleSubmit}>
-                {/* {JSON.stringify(this.props.details)} */}
-                <h3>{this.props.details.title}</h3>
-                <img src={this.props.details.poster} />
-                {/* <input type="text" className="editInput">{this.props.details.description}</input> */}
-                
+                {/* {JSON.stringify(this.props.details)} */}            
                 <form className={classes.container} noValidate autoComplete="off">
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Edit"
+                    multiline
+                    rows="1"
+                    defaultValue={this.state.title}
+                    className="editInput"
+                    margin="normal"
+                    variant="outlined"
+                    onChange={event => this.handleChangeTitle(event, 'title')}
+                />
+                <img src={this.props.details.poster} />    
                 <TextField
                     id="outlined-multiline-static"
                     label="Edit"

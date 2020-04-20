@@ -1,16 +1,15 @@
+//necessary import
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { takeEvery, put, actionChannel } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { HashRouter as Router } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
-
-
 import App from './components/App/App';
+
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
@@ -19,11 +18,13 @@ function* rootSaga() {
     yield takeEvery('EDIT', editMovieSaga);
 }
 
+//this generator function manages requests to query to DB for all films to appear on the homepage
+//it takes the query results and sends to the moviesReducer
 function* getMoviesSaga(action) {
     console.log('in getMovies', action);
     try {
         const response = yield axios.get('/api/movies');
-        console.log('Heres the GET response for /api/movies');
+        console.log('Heres the GET response for /api/movies', response.data);
         yield put({ type: 'MOVIES', payload: response.data })
     }
     catch (error) {
@@ -31,10 +32,14 @@ function* getMoviesSaga(action) {
     }
 }
 
+//this generator function manages requests to query to DB for all the details of a specific film 
+//it takes the query results and sends to the detailsReducer to appear on the homepage
+//as well as to the rootSaga which triggers the genreSaga
 function* getDetailSaga(action){
     console.log( 'in getDetail saga', action.payload);
     try{
         const response = yield axios.post(`/api/details/${action.payload}`, action.payload);
+        console.log('Here is getDetails GET response', response.data)
         yield put ({ type: 'DETAIL_PAGE', payload: response.data});
         yield put ({ type: 'GENRE',payload: action.payload })
     }
@@ -43,15 +48,19 @@ function* getDetailSaga(action){
     }
 }
 
+//this generator function manages requests to query to DB for all the genres associated with a specific film 
+//it takes the query results and sends to the detailsReducer to appear on the homepage
 function* getGenreSaga(action){
     console.log( 'in getGenreSaga');
+    const response = yield axios.post(`/api/genre/${action.payload}`, action.payload);
+    yield put({ type: 'GENRE_RESPONSE', payload: response.data });
 }
 
 function* editMovieSaga(action) {
     console.log('in editMovieSaga', action.payload);
     try {
         yield axios.put('/api/edit', action.payload);
-        yield put({ type: 'DETAILS' })
+        yield put({ type: 'DETAILS'})
     }
     catch (error) {
         console.log('Error on POST', error);
@@ -79,9 +88,9 @@ const detailsReducer = (state = {}, action) => {
 }
 
 // Used to store the movie genres
-const genres = (state = [], action) => {
+const genresReducer = (state = [], action) => {
     switch (action.type) {
-        case 'SET_GENRES':
+        case 'GENRE_RESPONSE':
             return action.payload;
         default:
             return state;
@@ -95,7 +104,7 @@ const sagaMiddleware = createSagaMiddleware();
 const storeInstance = createStore(
     combineReducers({
         moviesReducer,
-        genres,
+        genresReducer,
         detailsReducer,
     }),
     // Add sagaMiddleware to our store
