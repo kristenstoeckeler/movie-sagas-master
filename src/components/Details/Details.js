@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
-import MovieCard from '../MovieCard/MovieCard';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 
+//This component manages the Details view
 class Details extends Component{
 
-    // componentDidMount(){
-    //     this.props.dispatch({type:'DETAILS'});
-    // }
-
+    //redirects user back to homepage
     goBrowse = () => {
         this.props.history.push('/');
     }
 
+    //advances user to the Edit view
     goEdit = () => {
         this.props.history.push('/edit');
     }
@@ -33,6 +24,7 @@ class Details extends Component{
             <img src={this.props.details.poster} />
             <p>{this.props.details.description}</p>
             <h4>Genre</h4>
+            {/*The genre(s) arrives from index.js in the genresReducer as an array. So here I'm mapping through the array to capture all associated genres*/}
             {this.props.genres.map((genre) => {
                 return(
                     <p>{genre.name}</p>
@@ -45,7 +37,7 @@ class Details extends Component{
     }
 } 
 
-
+//making reducers available for use
 const putPropsOnReduxStore = (reduxStore) => ({
     details: reduxStore.detailsReducer,
     genres: reduxStore.genresReducer,

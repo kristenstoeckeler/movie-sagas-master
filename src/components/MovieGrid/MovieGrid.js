@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import MovieCard from '../MovieCard/MovieCard';
 import { connect } from 'react-redux';
 
+//this is for Material UI
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -23,6 +24,8 @@ const styles = theme => ({
     },
 });
 
+//This component is importing each Card into a Grid display
+//Though very imperfectly at the moment
 class GuttersGrid extends React.Component {
     state = {
         spacing: '16',
@@ -33,8 +36,6 @@ class GuttersGrid extends React.Component {
             [key]: value,
         });
     };
-
-
 
     render() {
         const { classes } = this.props;

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import MovieGrid from'../MovieGrid/MovieGrid';
-import MovieCard from '../MovieCard/MovieCard';
 import { connect } from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
-import { withStyles } from '@material-ui/core/styles';
 
 
+
+//This component manages the Homepage view and dispatches the initial GET from the DB
 class Home extends Component {
 
     componentDidMount() {
@@ -18,10 +15,10 @@ class Home extends Component {
 
         return (
             <>
-
                 <div className="App">
                     <h1>Welcome to Movie ChrOme</h1>
                     <h2>Movie Database</h2> 
+                    {/**Importing MovieGrid component */}
                         <MovieGrid /> 
                 </div>
             </>
@@ -29,9 +26,4 @@ class Home extends Component {
     }
 }
 
-const putPropsOnReduxStore = (reduxStore) => ({
-    movies: reduxStore.moviesReducer,
-});
-
-
-export default withStyles()(connect(putPropsOnReduxStore)(Home));
+export default connect()(Home);

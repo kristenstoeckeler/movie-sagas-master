@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route} from 'react-router-dom';
-import { withRouter } from 'react-router';
 import './App.css';
 import Home from '../Home/Home';
 import Details from '../Details/Details';
 import Edit from '../Edit/Edit';
-import { connect } from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
 
+//establishing routes for various views
 class App extends Component {
   render() {
     return (
@@ -22,10 +20,5 @@ class App extends Component {
   }
 }
 
-const putPropsOnReduxStore = (reduxStore) => ({
-  details: reduxStore.detailsReducer,
-});
-
-
-export default connect(putPropsOnReduxStore)(App);
+export default App;
 
