@@ -19,10 +19,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Details from '../Details/Details';
 
 
-
+//This is for Material UI
 const styles = theme => ({
     card: {
         maxWidth: 400,
@@ -49,17 +48,20 @@ const styles = theme => ({
     },
 });
 
+//This Component establishes each individual card per movie
 class MovieCard extends React.Component {
+    //this is for Material UI
     state = { 
         expanded: false,
     };
 
+    //this is for Material UI
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
 
-
-    //HandleChange and HandleSubmit Not WORKING TOGETHER AT THE MOMENT
+    //When the Details button is selected, this function captures the ID of the selection and dispatches it to the rootSaga
+    //to trigger the DetailsReducer, and then advances the user to the Details view.
     handleSubmit = (movieId) => {
         console.log('in handleSubmit', movieId);
         this.props.dispatch({ type: 'DETAILS', payload: {movieId} });
@@ -72,9 +74,7 @@ class MovieCard extends React.Component {
 
         return (
             <>
-            {/* {JSON.stringify(this.props.movies)}
-            {this.props.movies.map((movie) => {
-                return ( */}
+            {/* {JSON.stringify(this.props.movies)} */}
                         <Card className={classes.card}>
                             <CardHeader 
                                 avatar={
@@ -131,13 +131,16 @@ class MovieCard extends React.Component {
     }
 }
 
+//this is for Material UI
 MovieCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+//calling moviesReducer for use here
 const putPropsOnReduxStore = (reduxStore) => ({
     movies: reduxStore.moviesReducer,
 });
 
+//I can't remember why I needed to do this here. 
 MovieCard = withRouter(MovieCard);
 export default withStyles(styles)(connect(putPropsOnReduxStore)(MovieCard));

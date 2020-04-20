@@ -1,28 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
-import MovieCard from '../MovieCard/MovieCard';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import classNames from 'classnames';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-
-
-import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+//This is imported from Material-UI
 const styles = theme => ({
     container: {
         display: 'flex',
@@ -71,8 +58,10 @@ const currencies = [
 ];
 
 
-
+//This component manages Edit view
 class EditView extends Component {
+
+    //establishing local state
     state = {
         id: this.props.details.id,
         genre: '',
@@ -80,6 +69,7 @@ class EditView extends Component {
         title: this.props.details.title,
     };
 
+    //updates state with new data from Edit view inputs for title
     handleChangeTitle = (event, propertyName) => {
         console.log('here is the title input', event.target.value);
         this.setState({
@@ -87,7 +77,7 @@ class EditView extends Component {
         });
     }
 
-
+    //updates state with new data from Edit view inputs for description  
     handleChangeDesc = (event, propertyName) => {
         console.log( 'here is the description input', event.target.value );
         this.setState({ 
@@ -95,6 +85,7 @@ class EditView extends Component {
         });
     }
 
+    //updates state with new data from Edit view inputs for genre
     handleChangeGenre = genre => event => {
         console.log('here is the genre input', event.target.value);
         this.setState({
@@ -102,10 +93,13 @@ class EditView extends Component {
         });
     }
 
+    //redirects user back to Details view if they opt to cancel the edit
     cancelEdit = () => {
         this.props.history.push('/details');
     }
 
+    //dispatching local props to root saga, to trigger EditSaga; then redirects user to Details view again.
+    //This functionality is currently *NOT* displaying the Details view with updated information from the edit.
     handleSubmit = () => {
         console.log('in handleSubmit', this.state);
         this.props.dispatch({
@@ -116,8 +110,7 @@ class EditView extends Component {
     }
 
     render() {
-        
-        
+        {/*This (and below) is a Material UI import */}
         const { classes } = this.props;
         
         return (
@@ -197,15 +190,12 @@ class EditView extends Component {
     }
 }
 
-// TextFields.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
-
+//This is for Material-UI
 EditView.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-
+//Making detailsReducer available for use
 const putPropsOnReduxStore = (reduxStore) => ({
     details: reduxStore.detailsReducer,
 });

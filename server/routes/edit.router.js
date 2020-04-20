@@ -1,9 +1,12 @@
+//declaring express, pool and router as available for use.
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
 
-
+//this router is updating information to one specific movie based on the ID thats been passed in within req.body
+//it's returning that info to index.js because I'm attempting to pass it back to the detailsSaga to re-render the Details view
+//with the edited information from the DB
 router.put('/', (req, res) => {
 
     console.log('Heres whats in req.body', req.body);

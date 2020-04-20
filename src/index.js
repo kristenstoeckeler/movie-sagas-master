@@ -33,8 +33,10 @@ function* getMoviesSaga(action) {
 }
 
 //this generator function manages requests to query to DB for all the details of a specific film 
-//it takes the query results and sends to the detailsReducer to appear on the homepage
-//as well as to the rootSaga which triggers the genreSaga
+//it takes the query results and sends to the detailsReducer to appear in the Details view
+//as well as to the rootSaga which triggers the genreSaga generator function.
+//I used a axios.post because we need to pass the ID along to the router and my understanding
+//is that a GET won't allow anything to be passed through.
 function* getDetailSaga(action){
     console.log( 'in getDetail saga', action.payload);
     try{
@@ -49,13 +51,16 @@ function* getDetailSaga(action){
 }
 
 //this generator function manages requests to query to DB for all the genres associated with a specific film 
-//it takes the query results and sends to the detailsReducer to appear on the homepage
+//it takes the query results and sends to the genresReducer to display on the DOM in the Details view
 function* getGenreSaga(action){
     console.log( 'in getGenreSaga');
     const response = yield axios.post(`/api/genre/${action.payload}`, action.payload);
     yield put({ type: 'GENRE_RESPONSE', payload: response.data });
 }
 
+//this generator function manages requests to update information from the Edit view inputs to the DB for a film being edited 
+//Currently it takes the query results and attempts to send them back to the rootSaga to trigger the detailsSaga 
+//to re-render the updated film info to display on the DOM in the Details view. This second part is not working as of now.
 function* editMovieSaga(action) {
     console.log('in editMovieSaga', action.payload);
     try {
@@ -78,6 +83,7 @@ const moviesReducer = (state = [], action) => {
     }
 }
 
+// Used to store details of individual movies returned from the server
 const detailsReducer = (state = {}, action) => {
     switch (action.type) {
         case 'DETAIL_PAGE':
@@ -87,7 +93,7 @@ const detailsReducer = (state = {}, action) => {
     }
 }
 
-// Used to store the movie genres
+// Used to store the genres associated with specific movies returned from the server
 const genresReducer = (state = [], action) => {
     switch (action.type) {
         case 'GENRE_RESPONSE':
