@@ -6,13 +6,15 @@ const router = express.Router();
 
 router.post('/:id', (req, res) => {
 
-    console.log('Heres whats in id:', req.body);
+    console.log('Heres whats in req.body:', req.body);
     const id = req.body;
-    const queryText = `SELECT * FROM movies WHERE id = $1;`;
+    const queryText = `SELECT movie_genre, movie_id, "genres"."name" FROM movie_genre 
+                        JOIN genres ON movie_genre.movie_genre = genres.id
+                        WHERE movie_id = $1;`;
     pool.query(queryText, [id.movieId])
         .then((result) => {
-            console.log( 'this is what the router is sending to index.js', result.rows[0] );
-            res.send(result.rows[0]);
+            console.log('this is what the router is sending to index.js', result.rows);
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log(`Error on query ${error}`);

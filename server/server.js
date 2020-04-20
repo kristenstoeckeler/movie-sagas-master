@@ -12,9 +12,11 @@ app.use(express.static('build'));
 const movieRouter = require('./routes/movie.router');
 const detailsRouter = require('./routes/details.router');
 const editRouter = require('./routes/edit.router');
+const genreRouter = require('./routes/genre.router');
 app.use('/api/movies', movieRouter);
 app.use('/api/details', detailsRouter);
 app.use('/api/edit', editRouter);
+app.use('/api/genre', genreRouter);
 
 /** ---------- START SERVER ---------- **/
 app.listen(port, function () {
